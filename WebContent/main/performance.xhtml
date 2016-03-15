@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="150" header="Dosya Yükle">
+			<ui:include src="/main/file_upload.xhtml"/>
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="west" size="300" header="Ayarlar">
+			<ui:include src="/main/options.xhtml"/>
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="center" header="Grafik">
+		
+		</p:layoutUnit>
+	</p:layout>
+</html>

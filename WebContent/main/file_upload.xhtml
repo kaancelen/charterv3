@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+    <h:form>
+	    <p:fileUpload fileUploadListener="#{performanceController.handleFileUpload}" mode="advanced" update="growl options_form" 
+	    			auto="true" sizeLimit="20000000" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+	</h:form>
+      
+</html>

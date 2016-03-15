@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+     <h:form id="options_form">
+   		<p:commandButton value="Rapor Al" actionListener="#{performanceController.drawReport}"/>
+   		<p:commandButton value="Karşılaştırmalı Rapor Al" actionListener="#{performanceController.drawCompareReport}"/>
+	   	<br/><br/>
+	   	<p:dataList value="#{performanceController.excelFileList}" var="excelFile" type="ordered">
+	        <f:facet name="header">
+	            <p:outputLabel value="Yüklenen Dosyalar"/>
+	        </f:facet>
+	        <p:outputLabel value="#{excelFile.name} - #{excelFile.uploadDate}"/>
+    	</p:dataList>
+ 		
+ 		<h3>Aylar</h3>
+	 	<p:selectManyCheckbox value="#{performanceController.selectedMonths}" layout="grid" columns="2">
+	 		<f:selectItems value="#{performanceController.monthList}" var="month" itemLabel="#{month}" itemValue="#{month}"/>
+	 	</p:selectManyCheckbox>
+ 	</h:form>
+</html>
