@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -39,7 +40,10 @@ public class PerformanceController implements Serializable{
 	private LineChartModel monthlyChart;
 	private BarChartModel compareChart;
 	
-	private boolean isChartsDrow;
+	private boolean isPersonelChartDrawed;
+	private boolean isDepartmentChartDrawed;
+	private boolean isMonthlyChartDrawed;
+	private boolean isCompareChartDrawed;
 
 	@PostConstruct
 	public void init(){
@@ -75,12 +79,11 @@ public class PerformanceController implements Serializable{
 			excelFile.saveFile(event.getFile().getInputstream());
 			excelFile.loadData();
 			excelFileList.add(excelFile);
-			isChartsDrow = false;
 			
-			Util.showMessage(Messages.SUCCESS, Messages.FILE_UPLOAD_SUCCESS);
+			Util.showMessage(FacesMessage.SEVERITY_INFO, Messages.SUCCESS, Messages.FILE_UPLOAD_SUCCESS);
 			
 		} catch (IOException e) {
-			Util.showMessage(Messages.ERROR, e.getLocalizedMessage());
+			Util.showMessage(FacesMessage.SEVERITY_FATAL, Messages.ERROR, e.getLocalizedMessage());
 			System.err.println("PerformanceController : " + e.getLocalizedMessage());
 		}
 	}
@@ -89,20 +92,21 @@ public class PerformanceController implements Serializable{
 		System.out.println("PerformanceController#drawReport");
 		
 		if(excelFileList.isEmpty()){
-			Util.showMessage(Messages.ERROR, Messages.NEED_1_FILE);
+			Util.showMessage(FacesMessage.SEVERITY_ERROR, Messages.ERROR, Messages.NEED_1_FILE);
 		}else{
-			if(!isChartsDrow){
+			if(!(isPersonelChartDrawed || isDepartmentChartDrawed || isMonthlyChartDrawed)){
 				//get excel file
 				ExcelFile excelFile = excelFileList.get(0);
 				//draw performance
 				personelChart = ChartHelper.drawPerformans(excelFile.getJobRecordList(), ChartHelper.PERSONEL_PERFORMANCE);
 				ChartHelper.checkPersonelChart(personelChart, excelFile.getPersonelList());
+				isPersonelChartDrawed = true;
+				
 				//draw department
 				//TODO
+				
 				//draw monthly
 				//TODO
-				
-				//TODO isChartsDrow = true;
 			}
 		}
     }
@@ -111,18 +115,16 @@ public class PerformanceController implements Serializable{
 		System.out.println("PerformanceController#drawCompareReport");
 		
 		if(excelFileList.size() != 2){
-			Util.showMessage(Messages.ERROR, Messages.NEED_2_FILE);
+			Util.showMessage(FacesMessage.SEVERITY_ERROR, Messages.ERROR, Messages.NEED_2_FILE);
 			return;
 		}
-		if(isChartsDrow){ return; }
+		if(!isCompareChartDrawed){ return; }
 		
 		//get excel file
 		ExcelFile firstFile = excelFileList.get(0);
 		ExcelFile secondFile = excelFileList.get(1);
 		//draw compare
 		//TODO
-		
-		//TODO isChartsDrow = true;
     }
 	
 /**************************************************GETTER SETTER***************************************************/
@@ -181,5 +183,36 @@ public class PerformanceController implements Serializable{
 	public void setCompareChart(BarChartModel compareChart) {
 		this.compareChart = compareChart;
 	}
-	
+
+	public boolean isPersonelChartDrawed() {
+		return isPersonelChartDrawed;
+	}
+
+	public void setPersonelChartDrawed(boolean isPersonelChartDrawed) {
+		this.isPersonelChartDrawed = isPersonelChartDrawed;
+	}
+
+	public boolean isDepartmentChartDrawed() {
+		return isDepartmentChartDrawed;
+	}
+
+	public void setDepartmentChartDrawed(boolean isDepartmentChartDrawed) {
+		this.isDepartmentChartDrawed = isDepartmentChartDrawed;
+	}
+
+	public boolean isMonthlyChartDrawed() {
+		return isMonthlyChartDrawed;
+	}
+
+	public void setMonthlyChartDrawed(boolean isMonthlyChartDrawed) {
+		this.isMonthlyChartDrawed = isMonthlyChartDrawed;
+	}
+
+	public boolean isCompareChartDrawed() {
+		return isCompareChartDrawed;
+	}
+
+	public void setCompareChartDrawed(boolean isCompareChartDrawed) {
+		this.isCompareChartDrawed = isCompareChartDrawed;
+	}
 }

@@ -1,8 +1,11 @@
 package com.kaancelen.charterv3.utils;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class StringComparator implements Comparator<Object>{
+public class StringComparator implements Comparator<Object>, Serializable{
+
+	private static final long serialVersionUID = 7988989399796281800L;
 
 	@Override
 	public int compare(Object o1, Object o2) {

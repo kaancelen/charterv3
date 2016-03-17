@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,8 +20,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.kaancelen.charterv3.models.JobRecord;
 
-public class CustomHelper {
+public class CustomHelper implements Serializable{
 	
+	private static final long serialVersionUID = 93585403146831000L;
+
 	public static List<JobRecord> getJobRecordsFromExcelFile(String filepath){
 		List<JobRecord> records = new ArrayList<JobRecord>();
 		

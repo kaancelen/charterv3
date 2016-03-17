@@ -5,14 +5,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
-public class Util {
+public class Util implements Serializable{
 
-	public static void showMessage(String title, String detail){
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(title, detail));
+	private static final long serialVersionUID = 7728186242294356927L;
+
+	public static void showMessage(Severity severity, String title, String detail){
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity ,title, detail));
 	}
 	
 	public static String getFileExtension(String filename){

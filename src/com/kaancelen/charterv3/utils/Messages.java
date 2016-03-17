@@ -1,7 +1,11 @@
 package com.kaancelen.charterv3.utils;
 
-public class Messages {
+import java.io.Serializable;
 
+public class Messages implements Serializable{
+
+	private static final long serialVersionUID = -2387077504937016562L;
+	
 	public static final String SUCCESS = "Başarılı";
 	public static final String ERROR = "Hata";
 	

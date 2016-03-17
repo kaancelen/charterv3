@@ -1,5 +1,6 @@
 package com.kaancelen.charterv3.helpers;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.primefaces.model.chart.BarChartModel;
@@ -7,7 +8,9 @@ import org.primefaces.model.chart.ChartSeries;
 
 import com.kaancelen.charterv3.models.JobRecord;
 
-public class ChartHelper {
+public class ChartHelper implements Serializable{
+	
+	private static final long serialVersionUID = 339845787886029908L;
 	
 	public static final int PERSONEL_PERFORMANCE = 1;
 	public static final int DEPARTMENT_PERFORMANCE = 2;

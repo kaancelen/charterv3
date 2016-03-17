@@ -7,16 +7,16 @@
     <h:form id="chart_container">
 	    <p:tabView>
 			 <p:tab title="Personel">
-			 	<p:chart type="bar" model="#{performanceController.personelChart}"/>
+			 	<p:chart type="bar" model="#{performanceController.personelChart}" rendered="#{performanceController.personelChartDrawed}"/>
 			 </p:tab>
 			 <p:tab title="Bölüm">
-			 	<p:chart type="bar" model="#{performanceController.departmentChart}"/>
+			 	<p:chart type="bar" model="#{performanceController.departmentChart}" rendered="#{performanceController.departmentChartDrawed}"/>
 			 </p:tab>
 			 <p:tab title="Aylık">
-			 	<p:chart type="line" model="#{performanceController.monthlyChart}"/>
+			 	<p:chart type="line" model="#{performanceController.monthlyChart}" rendered="#{performanceController.monthlyChartDrawed}"/>
 			 </p:tab>
 			 <p:tab title="Aylık-Karşılaştırma">
-			 	<p:chart type="bar" model="#{performanceController.compareChart}"/>
+			 	<p:chart type="bar" model="#{performanceController.compareChart}" rendered="#{performanceController.compareChartDrawed}"/>
 			 </p:tab>
 		</p:tabView>
     </h:form>

@@ -1,5 +1,6 @@
 package com.kaancelen.charterv3.helpers;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,7 +11,9 @@ import com.kaancelen.charterv3.models.JobRecord;
 import com.kaancelen.charterv3.utils.Constants;
 import com.kaancelen.charterv3.utils.StringComparator;
 
-public class ChartSeriesCalculator {
+public class ChartSeriesCalculator implements Serializable {
+
+	private static final long serialVersionUID = -5487042240791691821L;
 
 	public static ChartSeries PersonelReport(List<JobRecord> jobRecords) {
 		Map<Object, Number> personelReportMap = new TreeMap<Object, Number>(new StringComparator());
