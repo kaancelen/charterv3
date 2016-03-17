@@ -103,10 +103,13 @@ public class PerformanceController implements Serializable{
 				isPersonelChartDrawed = true;
 				
 				//draw department
-				//TODO
+				departmentChart = ChartHelper.drawPerformans(excelFile.getJobRecordList(), ChartHelper.DEPARTMENT_PERFORMANCE);
+				isDepartmentChartDrawed = true;
 				
 				//draw monthly
-				//TODO
+				monthlyChart = ChartHelper.drawPerformansMonthly(excelFile.getJobRecordList());
+				ChartHelper.checkMonths(monthlyChart, excelFile.getMonthList());
+				isMonthlyChartDrawed = true;
 			}
 		}
     }

@@ -9,6 +9,7 @@ public class JobRecord implements Serializable{
 	private String personel;
 	private String type;
 	private String month;
+	private String result;
 	private String year;
 	
 	public String getPersonel() {
@@ -37,5 +38,14 @@ public class JobRecord implements Serializable{
 	}
 	public void setYear(String year) {
 		this.year = year;
+	}
+	public String getResult() {
+		if(result == null){
+			return "";
+		}
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

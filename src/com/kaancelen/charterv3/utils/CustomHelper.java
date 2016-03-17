@@ -63,7 +63,7 @@ public class CustomHelper implements Serializable{
 							case 7: break;
 							case 8: break;
 							case 9: record.setMonth(Util.replaceTurkishChars(cell.getStringCellValue().toUpperCase())); break;
-							case 10: break;
+							case 10: record.setResult(cell.getStringCellValue().toLowerCase()); break;
 							case 12: break;
 							case 13: break;
 							case 14: record.setType(cell.getStringCellValue().toLowerCase());break;
@@ -100,5 +100,13 @@ public class CustomHelper implements Serializable{
 			personelSet.add(record.getPersonel());
 		}
 		return new ArrayList<String>(personelSet);
+	}
+	
+	public static List<String> getMonths(List<JobRecord> jobRecords){
+		Set<String> monthSet = new TreeSet<>(new MonthComparator());
+		for (JobRecord record : jobRecords) {
+			monthSet.add(record.getMonth());
+		}
+		return new ArrayList<String>(monthSet);
 	}
 }
