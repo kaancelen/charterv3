@@ -18,6 +18,7 @@ public class ExcelFile implements Serializable{
 	private String path;
 	private String uploadDate;
 	private List<JobRecord> jobRecordList;
+	private List<String> personelList;
 
 	public String getName() {
 		return name;
@@ -51,6 +52,10 @@ public class ExcelFile implements Serializable{
 		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.HOUR_FORMAT);
 		this.uploadDate = dateFormat.format(uploadDate);
 	}
+	
+	public List<String> getPersonelList() {
+		return personelList;
+	}
 
 	public String getSafeFileName(String originalFileName){
 		return UUID.randomUUID().toString().substring(16) + "." + Util.getFileExtension(originalFileName);
@@ -62,5 +67,6 @@ public class ExcelFile implements Serializable{
 	
 	public void loadData(){
 		jobRecordList = CustomHelper.getJobRecordsFromExcelFile(path);
+		personelList = CustomHelper.getPersonels(jobRecordList);
 	}
 }

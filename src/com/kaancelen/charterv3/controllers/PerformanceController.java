@@ -17,6 +17,7 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 
+import com.kaancelen.charterv3.helpers.ChartHelper;
 import com.kaancelen.charterv3.models.ExcelFile;
 import com.kaancelen.charterv3.utils.Constants;
 import com.kaancelen.charterv3.utils.Messages;
@@ -37,6 +38,8 @@ public class PerformanceController implements Serializable{
 	private BarChartModel departmentChart;
 	private LineChartModel monthlyChart;
 	private BarChartModel compareChart;
+	
+	private boolean isChartsDrow;
 
 	@PostConstruct
 	public void init(){
@@ -72,6 +75,7 @@ public class PerformanceController implements Serializable{
 			excelFile.saveFile(event.getFile().getInputstream());
 			excelFile.loadData();
 			excelFileList.add(excelFile);
+			isChartsDrow = false;
 			
 			Util.showMessage(Messages.SUCCESS, Messages.FILE_UPLOAD_SUCCESS);
 			
@@ -84,17 +88,41 @@ public class PerformanceController implements Serializable{
 	public void drawReport(ActionEvent actionEvent) {
 		System.out.println("PerformanceController#drawReport");
 		
-		for (String month : selectedMonths) {
-			System.out.println(month);
+		if(excelFileList.isEmpty()){
+			Util.showMessage(Messages.ERROR, Messages.NEED_1_FILE);
+		}else{
+			if(!isChartsDrow){
+				//get excel file
+				ExcelFile excelFile = excelFileList.get(0);
+				//draw performance
+				personelChart = ChartHelper.drawPerformans(excelFile.getJobRecordList(), ChartHelper.PERSONEL_PERFORMANCE);
+				ChartHelper.checkPersonelChart(personelChart, excelFile.getPersonelList());
+				//draw department
+				//TODO
+				//draw monthly
+				//TODO
+				
+				//TODO isChartsDrow = true;
+			}
 		}
     }
 	
 	public void drawCompareReport(ActionEvent actionEvent) {
 		System.out.println("PerformanceController#drawCompareReport");
 		
-		for (String month : selectedMonths) {
-			System.out.println(month);
+		if(excelFileList.size() != 2){
+			Util.showMessage(Messages.ERROR, Messages.NEED_2_FILE);
+			return;
 		}
+		if(isChartsDrow){ return; }
+		
+		//get excel file
+		ExcelFile firstFile = excelFileList.get(0);
+		ExcelFile secondFile = excelFileList.get(1);
+		//draw compare
+		//TODO
+		
+		//TODO isChartsDrow = true;
     }
 	
 /**************************************************GETTER SETTER***************************************************/

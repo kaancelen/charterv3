@@ -5,8 +5,8 @@
       xmlns:f="http://java.sun.com/jsf/core">
       
      <h:form id="options_form">
-   		<p:commandButton value="Rapor Al" actionListener="#{performanceController.drawReport}"/>
-   		<p:commandButton value="Karşılaştırmalı Rapor Al" actionListener="#{performanceController.drawCompareReport}"/>
+   		<p:commandButton value="Rapor Al" actionListener="#{performanceController.drawReport}" update="growl chart_container"/>
+   		<p:commandButton value="Karşılaştırmalı Rapor Al" actionListener="#{performanceController.drawCompareReport}" update="growl chart_container"/>
 	   	<br/><br/>
 	   	<p:dataList value="#{performanceController.excelFileList}" var="excelFile" type="ordered">
 	        <f:facet name="header">

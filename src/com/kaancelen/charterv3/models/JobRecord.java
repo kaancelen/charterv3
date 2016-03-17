@@ -18,6 +18,9 @@ public class JobRecord implements Serializable{
 		this.personel = personel;
 	}
 	public String getType() {
+		if(type == null){
+			return "";
+		}
 		return type;
 	}
 	public void setType(String type) {

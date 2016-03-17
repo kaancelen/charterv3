@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -87,5 +89,13 @@ public class CustomHelper {
 	private static String getPersonelName(String cellValue){
 		String[] splittedName = cellValue.split(" ");
 		return Util.replaceTurkishChars(splittedName[0]).toUpperCase();
+	}
+	
+	public static List<String> getPersonels(List<JobRecord> jobRecords){
+		Set<String> personelSet = new TreeSet<>(new StringComparator());
+		for (JobRecord record : jobRecords) {
+			personelSet.add(record.getPersonel());
+		}
+		return new ArrayList<String>(personelSet);
 	}
 }
