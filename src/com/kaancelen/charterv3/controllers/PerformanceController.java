@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -44,6 +45,13 @@ public class PerformanceController implements Serializable{
 	private boolean isDepartmentChartDrawed;
 	private boolean isMonthlyChartDrawed;
 	private boolean isCompareChartDrawed;
+	
+	private List<Map<Object, Number>> personelData;
+	private List<Map<Object, Number>> departmentData; 
+	private List<Map<Object, Number>> monthlyData;
+	
+	private ExcelFile firstExcel;
+	private ExcelFile secondExcel;
 
 	@PostConstruct
 	public void init(){
@@ -96,19 +104,22 @@ public class PerformanceController implements Serializable{
 		}else{
 			if(!(isPersonelChartDrawed || isDepartmentChartDrawed || isMonthlyChartDrawed)){
 				//get excel file
-				ExcelFile excelFile = excelFileList.get(0);
+				firstExcel = excelFileList.get(0);
 				//draw performance
-				personelChart = ChartHelper.drawPerformans(excelFile.getJobRecordList(), ChartHelper.PERSONEL_PERFORMANCE);
-				ChartHelper.checkPersonelChart(personelChart, excelFile.getPersonelList());
+				personelChart = ChartHelper.drawPerformans(firstExcel.getJobRecordList(), ChartHelper.PERSONEL_PERFORMANCE);
+				ChartHelper.checkPersonelChart(personelChart, firstExcel.getPersonelList());
+				personelData = ChartHelper.calculatePersonelData(personelChart);
 				isPersonelChartDrawed = true;
 				
 				//draw department
-				departmentChart = ChartHelper.drawPerformans(excelFile.getJobRecordList(), ChartHelper.DEPARTMENT_PERFORMANCE);
+				departmentChart = ChartHelper.drawPerformans(firstExcel.getJobRecordList(), ChartHelper.DEPARTMENT_PERFORMANCE);
+				departmentData = ChartHelper.calculateDepartmentData(departmentChart);
 				isDepartmentChartDrawed = true;
 				
 				//draw monthly
-				monthlyChart = ChartHelper.drawPerformansMonthly(excelFile.getJobRecordList());
-				ChartHelper.checkMonths(monthlyChart, excelFile.getMonthList());
+				monthlyChart = ChartHelper.drawPerformansMonthly(firstExcel.getJobRecordList());
+				ChartHelper.checkMonths(monthlyChart, firstExcel.getMonthList());
+				monthlyData = ChartHelper.calculateMonthsData(monthlyChart);
 				isMonthlyChartDrawed = true;
 			}
 		}
@@ -124,8 +135,8 @@ public class PerformanceController implements Serializable{
 		if(!isCompareChartDrawed){ return; }
 		
 		//get excel file
-		ExcelFile firstFile = excelFileList.get(0);
-		ExcelFile secondFile = excelFileList.get(1);
+		firstExcel = excelFileList.get(0);
+		secondExcel = excelFileList.get(1);
 		//draw compare
 		//TODO
     }
@@ -217,5 +228,49 @@ public class PerformanceController implements Serializable{
 
 	public void setCompareChartDrawed(boolean isCompareChartDrawed) {
 		this.isCompareChartDrawed = isCompareChartDrawed;
+	}
+
+	public List<Map<Object, Number>> getPersonelData() {
+		return personelData;
+	}
+
+	public void setPersonelData(List<Map<Object, Number>> personelData) {
+		this.personelData = personelData;
+	}
+
+	public List<Map<Object, Number>> getDepartmentData() {
+		return departmentData;
+	}
+
+	public void setDepartmentData(List<Map<Object, Number>> departmentData) {
+		this.departmentData = departmentData;
+	}
+
+	public List<Map<Object, Number>> getMonthlyData() {
+		return monthlyData;
+	}
+
+	public void setMonthlyData(List<Map<Object, Number>> monthlyData) {
+		this.monthlyData = monthlyData;
+	}
+
+	public ExcelFile getFirstExcel() {
+		return firstExcel;
+	}
+
+	public void setFirstExcel(ExcelFile firstExcel) {
+		this.firstExcel = firstExcel;
+	}
+
+	public ExcelFile getSecondExcel() {
+		return secondExcel;
+	}
+
+	public void setSecondExcel(ExcelFile secondExcel) {
+		this.secondExcel = secondExcel;
+	}
+	
+	public String[] getDepartmentColumns(){
+		return Constants.DEPARTMENT_LABELS;
 	}
 }

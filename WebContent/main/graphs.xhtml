@@ -6,18 +6,65 @@
       
     <h:form id="chart_container">
 	    <p:tabView>
-			 <p:tab title="Personel">
-			 	<p:chart type="bar" model="#{performanceController.personelChart}" rendered="#{performanceController.personelChartDrawed}"/>
+	    
+			 <p:tab title="Personel" rendered="#{performanceController.personelChartDrawed}">
+			 	<p:chart type="bar" model="#{performanceController.personelChart}"/>
+			 	<br/><br/>
+ 				<p:dataTable id="personelTable" value="#{performanceController.personelData}" var="data" resizableColumns="true" rowIndexVar="index">
+				
+					<p:column headerText="Tip" style="font-size:12px;font-weight:bold;">
+						<p:outputLabel value="Rapor" rendered="#{index == 0}"/>
+						<p:outputLabel value="Çek" rendered="#{index == 1}"/>
+						<p:outputLabel value="Banka" rendered="#{index == 2}"/>
+						<p:outputLabel value="Toplam" rendered="#{index == 3}"/>
+					</p:column>
+					<p:columns value="#{performanceController.firstExcel.personelList}" var="personel" style="font-size:12px;text-align:center">
+						<f:facet name="header">
+							<p:outputLabel value="#{personel}"/>
+						</f:facet>
+						<p:outputLabel value="#{data.get(personel)}"/>
+					</p:columns>
+				</p:dataTable>
 			 </p:tab>
-			 <p:tab title="Bölüm">
-			 	<p:chart type="bar" model="#{performanceController.departmentChart}" rendered="#{performanceController.departmentChartDrawed}"/>
+			 
+			 <p:tab title="Bölüm" rendered="#{performanceController.departmentChartDrawed}">
+			 	<p:chart type="bar" model="#{performanceController.departmentChart}"/>
+			 	<br/><br/>
+				<p:dataTable id="departmentTable" value="#{performanceController.departmentData}" var="data" resizableColumns="true" rowIndexVar="index">
+					
+					<p:columns value="#{performanceController.departmentColumns}" var="label" style="font-size:12px;text-align:center">
+						<f:facet name="header">
+							<p:outputLabel value="#{label}"/>
+						</f:facet>
+						<p:outputLabel value="#{data.get(label)}"/>
+					</p:columns>
+				</p:dataTable>
 			 </p:tab>
-			 <p:tab title="Aylık">
-			 	<p:chart type="line" model="#{performanceController.monthlyChart}" rendered="#{performanceController.monthlyChartDrawed}"/>
+			 
+			 <p:tab title="Aylık" rendered="#{performanceController.monthlyChartDrawed}">
+			 	<p:chart type="line" model="#{performanceController.monthlyChart}" />
+			 	<br/><br/>
+    			<p:dataTable id="monthTable" value="#{performanceController.monthlyData}" var="data" resizableColumns="true" rowIndexVar="index">
+				
+					<p:column headerText="Tip" style="font-size:12px;font-weight:bold;">
+						<p:outputLabel value="Rapor" rendered="#{index == 0}"/>
+						<p:outputLabel value="Çek" rendered="#{index == 1}"/>
+						<p:outputLabel value="Banka" rendered="#{index == 2}"/>
+						<p:outputLabel value="Toplam" rendered="#{index == 3}"/>
+					</p:column>
+					<p:columns value="#{performanceController.firstExcel.monthList}" var="month" style="font-size:12px;text-align:center">
+						<f:facet name="header">
+							<p:outputLabel value="#{month}"/>
+						</f:facet>
+						<p:outputLabel value="#{data.get(month)}"/>
+					</p:columns>
+				</p:dataTable>
 			 </p:tab>
-			 <p:tab title="Aylık-Karşılaştırma">
-			 	<p:chart type="bar" model="#{performanceController.compareChart}" rendered="#{performanceController.compareChartDrawed}"/>
+			 
+			 <p:tab title="Aylık-Karşılaştırma" rendered="#{performanceController.compareChartDrawed}">
+			 	<p:chart type="bar" model="#{performanceController.compareChart}" />
 			 </p:tab>
+			 
 		</p:tabView>
     </h:form>
 </html>
