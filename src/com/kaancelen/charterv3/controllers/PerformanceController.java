@@ -132,13 +132,14 @@ public class PerformanceController implements Serializable{
 			Util.showMessage(FacesMessage.SEVERITY_ERROR, Messages.ERROR, Messages.NEED_2_FILE);
 			return;
 		}
-		if(!isCompareChartDrawed){ return; }
-		
-		//get excel file
-		firstExcel = excelFileList.get(0);
-		secondExcel = excelFileList.get(1);
-		//draw compare
-		//TODO
+		if(!isCompareChartDrawed){
+			//get excel file
+			firstExcel = excelFileList.get(0);	//new excel
+			secondExcel = excelFileList.get(1);	//old excel
+			//draw compare
+			compareChart = ChartHelper.drawCompareMonthly(firstExcel.getJobRecordList(), secondExcel.getJobRecordList(), firstExcel.getMonthList());
+			isCompareChartDrawed = true;
+		}
     }
 	
 /**************************************************GETTER SETTER***************************************************/

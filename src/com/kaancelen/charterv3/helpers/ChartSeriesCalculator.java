@@ -142,6 +142,11 @@ public class ChartSeriesCalculator implements Serializable {
 		return chartSeries;
 	}
 	
+	/**
+	 * @param jobRecords
+	 * @param type
+	 * @return
+	 */
 	public static LineChartSeries MonthlyReport(List<JobRecord> jobRecords, int type){
 		Map<Object, Number> monthlyMap = new TreeMap<Object, Number>(new MonthComparator());
 		String label = "";
@@ -184,5 +189,38 @@ public class ChartSeriesCalculator implements Serializable {
 		LineChartSeries lineChartSeries = new LineChartSeries(label);
 		lineChartSeries.setData(monthlyMap);
 		return lineChartSeries;
+	}
+
+	/**
+	 * @param firstJobRecors, new records 2016
+	 * @param secondJobRecords, old records 2015
+	 * @param drawedMonth
+	 * @param selectedMonths
+	 * @return
+	 */
+	public static ChartSeries CompareReport(List<JobRecord> firstJobRecors, List<JobRecord> secondJobRecords, String drawedMonth, List<String> selectedMonths) {
+		Map<Object, Number> compareMap = new TreeMap<Object, Number>();
+		for (String month : selectedMonths) {
+			compareMap.put(month + "-2016", 0);
+			compareMap.put(month + "-2015", 0);
+		}
+		
+		//new 2016 records
+		for (JobRecord newJobRecord : firstJobRecors) {
+			if(newJobRecord.getMonth().compareTo(drawedMonth) == 0){
+				compareMap.put(drawedMonth + "-2016", 1 + (Integer)compareMap.get(drawedMonth + "-2016"));
+			}
+		}
+		
+		//old 2015 records
+		for (JobRecord oldJobRecord : secondJobRecords) {
+			if(oldJobRecord.getMonth().compareTo(drawedMonth) == 0){
+				compareMap.put(drawedMonth + "-2015", 1 + (Integer)compareMap.get(drawedMonth + "-2015"));
+			}
+		}
+		
+		ChartSeries chartSeries = new ChartSeries();
+		chartSeries.setData(compareMap);
+		return chartSeries; 
 	}
 }

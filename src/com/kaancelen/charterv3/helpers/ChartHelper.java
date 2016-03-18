@@ -26,6 +26,11 @@ public class ChartHelper implements Serializable{
 	public static final int PERSONEL_PERFORMANCE = 1;
 	public static final int DEPARTMENT_PERFORMANCE = 2;
 
+	/**
+	 * @param jobRecords
+	 * @param type
+	 * @return
+	 */
 	public static BarChartModel drawPerformans(List<JobRecord> jobRecords, int type) {
 		BarChartModel barChartModel = new BarChartModel();
 		String title = null;
@@ -52,6 +57,10 @@ public class ChartHelper implements Serializable{
 		return barChartModel;
 	}
 	
+	/**
+	 * @param jobRecords
+	 * @return
+	 */
 	public static LineChartModel drawPerformansMonthly(List<JobRecord> jobRecords){
 		LineChartModel lineChartModel = new LineChartModel();
 		lineChartModel.setTitle("AYLIK PERFORMANS");
@@ -69,6 +78,28 @@ public class ChartHelper implements Serializable{
 		return lineChartModel;
 	}
 	
+	/**
+	 * @param firstJobRecors, new records 2016
+	 * @param secondJobRecords, old records 2015
+	 * @param selectedMonths
+	 * @return
+	 */
+	public static BarChartModel drawCompareMonthly(List<JobRecord> firstJobRecors, List<JobRecord> secondJobRecords, List<String> selectedMonths){
+		BarChartModel barChartModel = new BarChartModel();
+		barChartModel.setTitle("AYLIK KARŞILAŞTIRMA");
+		barChartModel.setStacked(true);
+		
+		for (String month : selectedMonths) {
+			barChartModel.addSeries(ChartSeriesCalculator.CompareReport(firstJobRecors, secondJobRecords, month, selectedMonths));
+		}
+		
+		return barChartModel;
+	}
+	
+	/**
+	 * @param model
+	 * @param personelList
+	 */
 	public static void checkPersonelChart(BarChartModel model, List<String> personelList){
 		for (ChartSeries chartSeries : model.getSeries()) {
 			for (String personel : personelList) {
@@ -78,6 +109,10 @@ public class ChartHelper implements Serializable{
 		}
 	}
 	
+	/**
+	 * @param model
+	 * @param monthList
+	 */
 	public static void checkMonths(LineChartModel model, List<String> monthList){
 		for (ChartSeries chartSeries : model.getSeries()) {
 			for (String month : monthList) {
@@ -87,6 +122,10 @@ public class ChartHelper implements Serializable{
 		}
 	}
 	
+	/**
+	 * @param personelChart
+	 * @return
+	 */
 	public static List<Map<Object, Number>> calculatePersonelData(BarChartModel personelChart){
 		List<Map<Object, Number>> personelData = new ArrayList<Map<Object, Number>>();
 		Map<Object, Number> report = personelChart.getSeries().get(0).getData();
@@ -106,6 +145,10 @@ public class ChartHelper implements Serializable{
 		return personelData;
 	}
 	
+	/**
+	 * @param departmentChart
+	 * @return
+	 */
 	public static List<Map<Object, Number>> calculateDepartmentData(BarChartModel departmentChart){
 		List<Map<Object, Number>> departmentData = new ArrayList<Map<Object, Number>>();
 		Map<Object, Number> report = departmentChart.getSeries().get(0).getData();//rapor
@@ -129,6 +172,10 @@ public class ChartHelper implements Serializable{
 		return departmentData;
 	}
 	
+	/**
+	 * @param monthlyChart
+	 * @return
+	 */
 	public static List<Map<Object, Number>> calculateMonthsData(LineChartModel monthlyChart){
 		List<Map<Object, Number>> monthlyData = new ArrayList<Map<Object,Number>>();
 		for(int i=0; i<4; i++){
