@@ -64,6 +64,7 @@ public class CustomHelper implements Serializable{
 							case 8: break;
 							case 9: record.setMonth(Util.replaceTurkishChars(cell.getStringCellValue().toUpperCase())); break;
 							case 10: record.setResult(cell.getStringCellValue().toLowerCase()); break;
+							case 11: break;
 							case 12: break;
 							case 13: break;
 							case 14: record.setType(cell.getStringCellValue().toLowerCase());break;
