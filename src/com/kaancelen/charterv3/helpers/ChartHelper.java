@@ -17,6 +17,7 @@ import org.primefaces.model.chart.LineChartModel;
 import com.kaancelen.charterv3.models.JobRecord;
 import com.kaancelen.charterv3.utils.Constants;
 import com.kaancelen.charterv3.utils.LabelComparator;
+import com.kaancelen.charterv3.utils.MonthComparator;
 import com.kaancelen.charterv3.utils.StringComparator;
 
 public class ChartHelper implements Serializable{
@@ -183,5 +184,26 @@ public class ChartHelper implements Serializable{
 		}
 		
 		return monthlyData;
+	}
+
+	public static List<Map<Object, Number>> calculateCompareData(BarChartModel compareChart, List<String> monthList) {
+		List<Map<Object, Number>> compareData = new ArrayList<Map<Object,Number>>();
+		
+		compareData.add(ChartHelper.getDataMap(compareChart, monthList, "2015"));
+		compareData.add(ChartHelper.getDataMap(compareChart, monthList, "2016"));
+		
+		return compareData;
+	}
+	
+	public static Map<Object, Number> getDataMap(BarChartModel compareChart, List<String> monthList, String year) {
+		Map<Object, Number> yearMap = new TreeMap<>(new MonthComparator());
+		
+		for(int i=0; i<monthList.size(); i++){
+			ChartSeries series = compareChart.getSeries().get(i);
+			String month = monthList.get(i);
+			yearMap.put(month, series.getData().get(month + "-" + year));
+		}
+		
+		return yearMap;
 	}
 }

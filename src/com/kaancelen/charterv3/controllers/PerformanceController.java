@@ -49,6 +49,7 @@ public class PerformanceController implements Serializable{
 	private List<Map<Object, Number>> personelData;
 	private List<Map<Object, Number>> departmentData; 
 	private List<Map<Object, Number>> monthlyData;
+	private List<Map<Object, Number>> compareData;
 	
 	private ExcelFile firstExcel;
 	private ExcelFile secondExcel;
@@ -138,6 +139,7 @@ public class PerformanceController implements Serializable{
 			secondExcel = excelFileList.get(1);	//old excel
 			//draw compare
 			compareChart = ChartHelper.drawCompareMonthly(firstExcel.getJobRecordList(), secondExcel.getJobRecordList(), firstExcel.getMonthList());
+			compareData = ChartHelper.calculateCompareData(compareChart, firstExcel.getMonthList());
 			isCompareChartDrawed = true;
 		}
     }
@@ -271,6 +273,14 @@ public class PerformanceController implements Serializable{
 		this.secondExcel = secondExcel;
 	}
 	
+	public List<Map<Object, Number>> getCompareData() {
+		return compareData;
+	}
+
+	public void setCompareData(List<Map<Object, Number>> compareData) {
+		this.compareData = compareData;
+	}
+
 	public String[] getDepartmentColumns(){
 		return Constants.DEPARTMENT_LABELS;
 	}

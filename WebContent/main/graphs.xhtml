@@ -63,6 +63,20 @@
 			 
 			 <p:tab title="Aylık-Karşılaştırma" rendered="#{performanceController.compareChartDrawed}">
 			 	<p:chart type="bar" model="#{performanceController.compareChart}" />
+			 	<br/><br/>
+    			<p:dataTable id="compareTable" value="#{performanceController.compareData}" var="data" resizableColumns="true" rowIndexVar="index">
+				
+					<p:column headerText="Yıl" style="font-size:12px;font-weight:bold;">
+						<p:outputLabel value="2015" rendered="#{index == 0}"/>
+						<p:outputLabel value="2016" rendered="#{index == 1}"/>
+					</p:column>
+					<p:columns value="#{performanceController.firstExcel.monthList}" var="month" style="font-size:12px;text-align:center">
+						<f:facet name="header">
+							<p:outputLabel value="#{month}"/>
+						</f:facet>
+						<p:outputLabel value="#{data.get(month)}"/>
+					</p:columns>
+				</p:dataTable>
 			 </p:tab>
 			 
 		</p:tabView>
