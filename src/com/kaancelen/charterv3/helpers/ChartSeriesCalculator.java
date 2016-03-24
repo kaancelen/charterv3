@@ -12,6 +12,7 @@ import com.kaancelen.charterv3.models.JobRecord;
 import com.kaancelen.charterv3.utils.Constants;
 import com.kaancelen.charterv3.utils.LabelComparator;
 import com.kaancelen.charterv3.utils.MonthComparator;
+import com.kaancelen.charterv3.utils.MonthYearComparator;
 import com.kaancelen.charterv3.utils.StringComparator;
 
 public class ChartSeriesCalculator implements Serializable {
@@ -199,7 +200,7 @@ public class ChartSeriesCalculator implements Serializable {
 	 * @return
 	 */
 	public static ChartSeries CompareReport(List<JobRecord> firstJobRecors, List<JobRecord> secondJobRecords, String drawedMonth, List<String> selectedMonths) {
-		Map<Object, Number> compareMap = new TreeMap<Object, Number>();
+		Map<Object, Number> compareMap = new TreeMap<Object, Number>(new MonthYearComparator());
 		for (String month : selectedMonths) {
 			compareMap.put(month + "-2016", 0);
 			compareMap.put(month + "-2015", 0);
